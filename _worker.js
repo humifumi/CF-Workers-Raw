@@ -16,11 +16,12 @@ export default {
 				}
 				githubRawUrl += url.pathname;
 			}
-			//console.log(githubRawUrl);
-			if (env.GH_TOKEN && env.TOKEN){
-				if (env.TOKEN == url.searchParams.get('token')) token = env.GH_TOKEN || token;
-				else token = url.searchParams.get('token') || token;
-			} else token = url.searchParams.get('token') || env.GH_TOKEN || env.TOKEN || token;
+
+
+			if (env.GH_TOKEN){
+				if(env.TOKEN && env.TOKEN !== url.searchParams.get('token')) return new Response('TOKEN错误', { status: 400 })
+				token = env.GH_TOKEN
+			} else token = url.searchParams.get('token') || env.GH_TOKEN || token;
 			
 			const githubToken = token;
 			//console.log(githubToken);
